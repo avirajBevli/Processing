@@ -1,0 +1,23 @@
+class Cubie{
+  PVector pos;
+  float len;
+  
+  Cubie(float x, float y, float z, float len_){
+    pos = new PVector(x,y,z);
+    len = len_;
+  }
+  
+  void show(){
+    fill(255);//colour to fill inside shapes, 255 is white
+    stroke(0);//color to draw the lines and borders around shapes
+    strokeWeight(8);//thickness of border lines
+    pushMatrix();//save the state
+    translate(pos.x, pos.y, pos.z);//moves the point of origin from the 
+    //top left corner of the screen
+    
+   
+    box(len);//box is a processing function to put a box at the point we are at
+    //by translate
+    popMatrix();//restore the state of the transformations
+  }
+}
