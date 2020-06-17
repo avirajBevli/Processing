@@ -1,0 +1,59 @@
+
+class Move {
+  float angle = 0;//angle to rotate around the axis by
+  //normal is given by x,y,z
+  int x = 0;//1 or -1 ->right/left
+  int y = 0;//1 or -1 -> front/back
+  int z = 0;
+  int dir;//direction of rotation
+  boolean animating = false;
+  boolean finished = false;
+
+  Move(int x, int y, int z, int dir) {
+    this.x = x;
+    this.y = y;
+    this.z = z;
+    this.dir = dir;
+  }
+
+  Move copy() {
+    return new Move(x, y, z, dir);
+  }
+
+  void reverse() {
+    dir *= -1;
+  }
+
+  void start() {
+    animating = true;
+    finished = false;
+    this.angle = 0;
+  }
+
+  boolean finished() {
+    return finished;
+  }
+
+  void update() {
+    if (animating) {
+      angle += dir * speed;
+      if (abs(angle) > HALF_PI) {
+        angle = 0;
+        animating = false;
+        finished = true;
+        
+        //Since now one full rotation of PI/2 has happened, 
+        //now, we will make permanent change to the states of all the cubies
+        //and all their faces, so that the next set of transformations
+        //can happen on the new state of the rubics cube
+        if (abs(z) > 0) {
+          turnZ(z, dir);//defined in turns
+        } else if (abs(x) > 0) {
+          turnX(x, dir);
+        } else if (abs(y) > 0) {
+          turnY(y, dir);
+        }
+      }
+    }
+  }
+}  
