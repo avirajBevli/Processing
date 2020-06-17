@@ -1,0 +1,43 @@
+class Cubie {
+  PMatrix3D matrix;
+  boolean highlight = false;
+  int x= 0;
+  int y= 0;
+  int z =0;
+
+  //Constructor function
+  Cubie(PMatrix3D m, int x, int y, int z) {
+    this.matrix = m;
+    this.x = x;
+    this.y = y;
+    this.z = z;
+  }
+
+  void update(int x, int y, int z){
+    matrix.reset();
+    matrix.translate(x,y,z);
+    this.x = x;
+    this.y = y;
+    this.z = z;
+  }
+  
+  void show() {
+    fill(255);
+    if(highlight){
+      fill(0,255,0);
+    }
+      
+    stroke(0);
+    strokeWeight(0.1);//small because we are scaling up
+    pushMatrix(); 
+    applyMatrix(matrix);//function
+    //Multiplies the current matrix(identity in this case) by the one specified 
+    //through the parameters. This is very slow because it
+    //will try to calculate the inverse of the transform, 
+    //so avoid it whenever possible. The equivalent function 
+    //in OpenGL is glMultMatrix().
+    box(1);
+    
+    popMatrix();
+  }
+}
